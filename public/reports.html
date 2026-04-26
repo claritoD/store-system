@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reports - Store System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar p-3">
+        <div class="fw-bold mb-3">Store System</div>
+        <nav class="nav nav-pills flex-column gap-1">
+          <a class="nav-link" data-nav href="dashboard.html">Dashboard</a>
+          <a class="nav-link" data-nav href="categories.html">Categories</a>
+          <a class="nav-link" data-nav href="products.html">Products</a>
+          <a class="nav-link" data-nav href="variants.html">Variants</a>
+          <a class="nav-link" data-nav href="inventory.html">Inventory</a>
+          <a class="nav-link" data-nav href="sales.html">Sales POS</a>
+          <a class="nav-link" data-nav href="reports.html">Reports</a>
+          <a class="nav-link" data-nav href="settings.html">Settings</a>
+        </nav>
+        <hr class="border-secondary my-3" />
+        <button id="logoutBtn" class="btn btn-outline-light btn-sm w-100">Logout</button>
+      </aside>
+
+      <main class="content">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="mb-0">Reports</h3>
+          <button class="btn btn-outline-secondary" onclick="window.print()">Print</button>
+        </div>
+
+        <ul class="nav nav-tabs" id="tabs">
+          <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#daily">Daily</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#monthly">Monthly</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#products">Product Sales</button></li>
+          <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#low">Low Stock</button></li>
+        </ul>
+
+        <div class="tab-content pt-3">
+          <div class="tab-pane fade show active" id="daily">
+            <div class="card shadow-sm border-0 rounded-4">
+              <div class="card-body">
+                <div class="row g-2 align-items-end">
+                  <div class="col-md-3">
+                    <label class="form-label">From</label>
+                    <input id="dFrom" class="form-control" type="date" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">To</label>
+                    <input id="dTo" class="form-control" type="date" />
+                  </div>
+                  <div class="col-md-2 d-grid">
+                    <button id="dRun" class="btn btn-outline-primary">Run</button>
+                  </div>
+                </div>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm align-middle">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th class="text-end">Sales</th>
+                        <th class="text-end">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="dBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="monthly">
+            <div class="card shadow-sm border-0 rounded-4">
+              <div class="card-body">
+                <div class="row g-2 align-items-end">
+                  <div class="col-md-3">
+                    <label class="form-label">Year</label>
+                    <input id="mYear" class="form-control" type="number" min="2000" max="2100" />
+                  </div>
+                  <div class="col-md-2 d-grid">
+                    <button id="mRun" class="btn btn-outline-primary">Run</button>
+                  </div>
+                </div>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm align-middle">
+                    <thead>
+                      <tr>
+                        <th>Month</th>
+                        <th class="text-end">Sales</th>
+                        <th class="text-end">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="mBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="products">
+            <div class="card shadow-sm border-0 rounded-4">
+              <div class="card-body">
+                <div class="row g-2 align-items-end">
+                  <div class="col-md-3">
+                    <label class="form-label">From (optional)</label>
+                    <input id="pFrom" class="form-control" type="date" />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">To (optional)</label>
+                    <input id="pTo" class="form-control" type="date" />
+                  </div>
+                  <div class="col-md-2 d-grid">
+                    <button id="pRun" class="btn btn-outline-primary">Run</button>
+                  </div>
+                </div>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm align-middle">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th class="text-end">Qty Sold</th>
+                        <th class="text-end">Revenue</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="low">
+            <div class="card shadow-sm border-0 rounded-4">
+              <div class="card-body">
+                <div class="row g-2 align-items-end">
+                  <div class="col-md-3">
+                    <label class="form-label">Threshold</label>
+                    <input id="lT" class="form-control" type="number" min="0" max="1000" value="5" />
+                  </div>
+                  <div class="col-md-2 d-grid">
+                    <button id="lRun" class="btn btn-outline-primary">Run</button>
+                  </div>
+                </div>
+                <div class="table-responsive mt-3">
+                  <table class="table table-sm align-middle">
+                    <thead>
+                      <tr>
+                        <th>SKU</th>
+                        <th>Product</th>
+                        <th class="text-end">Stock</th>
+                      </tr>
+                    </thead>
+                    <tbody id="lBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body"></div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+      function todayStr() {
+        const d = new Date();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${d.getFullYear()}-${m}-${day}`;
+      }
+
+      async function runDaily() {
+        const from = document.getElementById("dFrom").value;
+        const to = document.getElementById("dTo").value;
+        const r = await apiFetch(`/api/reports/daily?from=${from}&to=${to}`);
+        document.getElementById("dBody").innerHTML = r.rows.length
+          ? r.rows
+              .map(
+                (x) => `
+              <tr>
+                <td>${x.day}</td>
+                <td class="text-end">${x.sales_count}</td>
+                <td class="text-end">₱ ${money(x.total)}</td>
+              </tr>`
+              )
+              .join("")
+          : `<tr><td colspan="3" class="text-muted">No rows.</td></tr>`;
+      }
+
+      async function runMonthly() {
+        const year = document.getElementById("mYear").value;
+        const r = await apiFetch(`/api/reports/monthly?year=${year}`);
+        document.getElementById("mBody").innerHTML = r.rows.length
+          ? r.rows
+              .map(
+                (x) => `
+              <tr>
+                <td>${x.month}</td>
+                <td class="text-end">${x.sales_count}</td>
+                <td class="text-end">₱ ${money(x.total)}</td>
+              </tr>`
+              )
+              .join("")
+          : `<tr><td colspan="3" class="text-muted">No rows.</td></tr>`;
+      }
+
+      async function runProducts() {
+        const from = document.getElementById("pFrom").value;
+        const to = document.getElementById("pTo").value;
+        const params = new URLSearchParams();
+        if (from && to) {
+          params.set("from", from);
+          params.set("to", to);
+        }
+        const r = await apiFetch("/api/reports/products" + (params.toString() ? `?${params}` : ""));
+        document.getElementById("pBody").innerHTML = r.rows.length
+          ? r.rows
+              .map(
+                (x) => `
+              <tr>
+                <td>${x.product_name}</td>
+                <td class="text-end">${x.qty_sold}</td>
+                <td class="text-end">₱ ${money(x.revenue)}</td>
+              </tr>`
+              )
+              .join("")
+          : `<tr><td colspan="3" class="text-muted">No rows.</td></tr>`;
+      }
+
+      async function runLow() {
+        const t = document.getElementById("lT").value;
+        const r = await apiFetch(`/api/reports/low-stock?threshold=${t}`);
+        document.getElementById("lBody").innerHTML = r.rows.length
+          ? r.rows
+              .map(
+                (x) => `
+              <tr class="${Number(x.stock) <= 5 ? "low-stock" : ""}">
+                <td class="fw-semibold">${x.sku}</td>
+                <td>${x.product_name}</td>
+                <td class="text-end fw-bold">${x.stock}</td>
+              </tr>`
+              )
+              .join("")
+          : `<tr><td colspan="3" class="text-muted">No rows.</td></tr>`;
+      }
+
+      (async () => {
+        setActiveNav();
+        await requireSession();
+        document.getElementById("logoutBtn").addEventListener("click", async () => {
+          await apiFetch("/api/auth/logout", { method: "POST" });
+          location.href = "login.html";
+        });
+
+        const t = todayStr();
+        document.getElementById("dFrom").value = t;
+        document.getElementById("dTo").value = t;
+        document.getElementById("mYear").value = new Date().getFullYear();
+
+        document.getElementById("dRun").addEventListener("click", runDaily);
+        document.getElementById("mRun").addEventListener("click", runMonthly);
+        document.getElementById("pRun").addEventListener("click", runProducts);
+        document.getElementById("lRun").addEventListener("click", runLow);
+
+        await runDaily();
+        await runMonthly();
+        await runProducts();
+        await runLow();
+      })().catch((e) => {
+        console.error(e);
+        toast(e.message || "Failed to load", "danger");
+      });
+    </script>
+  </body>
+</html>
+

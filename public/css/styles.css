@@ -1,0 +1,59 @@
+:root {
+  --sidebar-width: 240px;
+}
+
+body {
+  background: #f7f7fb;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: #111827;
+  color: #e5e7eb;
+}
+
+.sidebar a {
+  color: #e5e7eb;
+  text-decoration: none;
+}
+
+.sidebar .nav-link {
+  color: #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.card-kpi {
+  border: 0;
+  border-radius: 14px;
+}
+
+.table thead th {
+  white-space: nowrap;
+}
+
+.low-stock {
+  background: #fff3cd !important;
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    display: none;
+  }
+}
+
