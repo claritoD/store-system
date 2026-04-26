@@ -200,7 +200,7 @@
 
         document.getElementById("logoutBtn").addEventListener("click", async () => {
           await apiFetch("/api/auth/logout", { method: "POST" });
-          location.href = "login.html";
+          location.href = "index.html";
         });
 
         modal = new bootstrap.Modal(document.getElementById("modal"));

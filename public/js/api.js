@@ -34,7 +34,7 @@ async function requireSession() {
     return r.user;
   } catch (e) {
     if (e.status === 401) {
-      window.location.href = "login.html";
+      window.location.href = "index.html";
       return null;
     }
     throw e;
