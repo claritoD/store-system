@@ -49,13 +49,9 @@ app.use(
   })
 );
 
-//app.get('/api/health', async (req, res) => {
-  //const r = await pool.query('SELECT 1 AS ok');
-  //res.json({ ok: true, db: r.rows[0].ok });
-//});
-
-app.get("/api/health", (req, res) => {
-    res.json({ status: "ok", db: "not checked" });
+app.get('/api/health', async (req, res) => {
+  const r = await pool.query('SELECT 1 AS ok');
+  res.json({ ok: true, db: r.rows[0].ok });
 });
 
 app.get("/", (req, res) => {
