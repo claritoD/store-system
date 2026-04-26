@@ -37,7 +37,7 @@ app.use(
       createTableIfMissing: false
     }),
     name: 'sid',
-    secret: process.env.SESSION_SECRET || 'dev_secret_change_me',
+    secret: process.env.SESSION_SECRET || 'store-system-session-secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -52,6 +52,10 @@ app.use(
 app.get('/api/health', async (req, res) => {
   const r = await pool.query('SELECT 1 AS ok');
   res.json({ ok: true, db: r.rows[0].ok });
+});
+
+app.get("/", (req, res) => {
+    res.send("Store System API is running");
 });
 
 app.use('/api/auth', authRoutes);
